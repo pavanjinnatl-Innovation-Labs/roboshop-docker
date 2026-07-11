@@ -92,11 +92,7 @@ services:
     depens_on:
       - cart
       - user
-      - rabbitmq
-
-    depends_on:
-      - rabbitmq
-      
+      - rabbitmq      
 networks:
   default:
     name: roboshop
