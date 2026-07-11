@@ -89,7 +89,7 @@ services:
       AMPQP_HOST: rabbitmq
       AMPQP_USER: roboshop
       AMPQP_PASS: roboshop123
-    depens_on:
+    depends_on:
       - cart
       - user
       - rabbitmq      
