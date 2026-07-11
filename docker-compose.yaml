@@ -1,39 +1,45 @@
 name: roboshop
+
 services:
   mongodb:
     build: ./mongodb
-    image: roboshop/mongodb:v1 # docker build -t joindevops/mongodb:v1
-    container_name: mongodb # docker run -d --network roboshop joindevops/mongodb:v1
+    image: roboshop/mongodb:v1
+    container_name: mongodb
+
   catalogue:
     build: ./catalogue
     image: roboshop/catalogue:v1
     container_name: catalogue
     depends_on:
-    - mongodb
+      - mongodb
+
   frontend:
     build: ./frontend
     image: roboshop/frontend:v1
     container_name: frontend
     ports:
-    - "80:80"
+      - "80:80"
     depends_on:
-    - catalogue
+      - catalogue
+
+  redis:
+    image: redis:7
+    container_name: redis
+
   user:
-    build:  ./user
-    image:  roboshop/user:v1
+    build: ./user
+    image: roboshop/user:v1
     container_name: user
     environment:
-       MONGO: true
-       REDIS_URL: redis://redis:6379
-       MONGO_URL: mongodb://mongodb:27017/roboshop
+      MONGO: "true"
+      REDIS_URL: redis://redis:6379
+      MONGO_URL: mongodb://mongodb:27017/roboshop
     depends_on:
-    - redis
-    - mongodb
-  redis:
-  image: redis:7
-  container_name: redis    
+      - redis
+      - mongodb
+
 networks:
-  default: # this means all the services in this file use this network
+  default:
     name: roboshop
     driver: bridge
-    external: false # if true it should be created manually, if false docker creates this network
+    external: false
