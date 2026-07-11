@@ -18,7 +18,7 @@ services:
     - "80:80"
 
 
-networs:
+networks:
   default:
    name: roboshop
    driver: bridge
